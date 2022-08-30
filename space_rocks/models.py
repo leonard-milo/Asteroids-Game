@@ -1,7 +1,7 @@
 from pygame.math import Vector2
 from pygame.transform import rotozoom
 
-from utils import load_sprite
+from utils import load_sprite, wrap_position
 
 UP = Vector2(0, -1)
 
@@ -19,12 +19,12 @@ class GameObject:
         blit_position = self.position - rotated_surface_size * 0.5
         surface.blit(rotated_surface, blit_position)
 
-    def move(self):
-        self.position = self.position + self.velocity
-
     def collides_with(self, other_obj):
         distance = self.position.distance_to(other_obj.position)
         return distance < self.radius + other_obj.radius
+
+    def move(self, surface):
+        self.position = wrap_position(self.position + self.velocity, surface)
 
 class Spaceship(GameObject):
     MANEUVERABILITY = 3
