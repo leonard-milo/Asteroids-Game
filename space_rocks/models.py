@@ -26,7 +26,9 @@ class GameObject:
 class Spaceship(GameObject):
     MANEUVERABILITY = 3
     ACCELERATION = 0.25
-    def __init__(self, position):
+    BULLET_SPEED = 3
+    def __init__(self, position, create_bullet_callback):
+        self.create_bullet_callback = create_bullet_callback
         # Make a copy of the original UP vector
         self.direction = Vector2(UP)
 
@@ -46,6 +48,11 @@ class Spaceship(GameObject):
 
     def accelerate(self):
         self.velocity += self.direction * self.ACCELERATION
+
+    def shoot(self):
+        bullet_velocity = self.direction * self.BULLET_SPEED + self.velocity
+        bullet = Bullet(self.position, bullet_velocity)
+        self.create_bullet_callback(bullet)
 
 class Asteroid(GameObject):
     def __init__(self, position):
