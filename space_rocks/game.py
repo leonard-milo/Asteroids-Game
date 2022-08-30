@@ -62,6 +62,10 @@ class SpaceRocks:
                     self.spaceship = None
                     break
 
+        for bullet in self.bullets[:]:
+            if not self.screen.get_rect().collidepoint(bullet.position):
+                self.bullets.remove(bullet)
+
     def _draw(self):
         self.screen.blit(self.background, (0, 0))
 
