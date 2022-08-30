@@ -28,6 +28,7 @@ class GameObject:
 
 class Spaceship(GameObject):
     MANEUVERABILITY = 3
+    ACCELERATION = 0.25
     def __init__(self, position):
         # Make a copy of the original UP vector
         self.direction = Vector2(UP)
@@ -38,3 +39,6 @@ class Spaceship(GameObject):
         sign = 1 if clockwise else -1
         angle = self.MANEUVERABILITY * sign
         self.direction.rotate_ip(angle)
+
+    def accelerate(self):
+        self.velocity += self.direction * self.ACCELERATION
